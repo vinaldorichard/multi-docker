@@ -1,0 +1,16 @@
+FROM node:alpine
+
+WORKDIR '/app'
+
+COPY package.json .
+
+RUN npm install -g npm@8.6.0
+RUN npm install
+RUN npm install -D babel-loader @babel/core @babel/preset-env webpack
+
+# Change the owner
+RUN mkdir node_modules/.cache && chmod -R 777 node_modules/.cache
+
+COPY . .
+
+CMD ["npm", "run", "start"]
